@@ -736,3 +736,39 @@ a { color: inherit; }
 .js [data-reveal-group] > * {
   will-change: transform, opacity;
 }
+
+/* =============================================================
+   RESPONSIVE — tablet & mobile adjustments
+   ============================================================= */
+
+/* Tablet and below: tighten the nav so the links never clip. */
+@media (max-width: 860px) {
+  .nav__links {
+    gap: clamp(12px, 3.4vw, 24px);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  /* The hero placeholder caption is absolutely positioned and collides
+     with the "Selected Work" CTA on narrow screens — drop it here. */
+  .hero__tag { display: none; }
+
+  /* Nav: allow the wordmark + links to share the row without overflow. */
+  .nav { gap: 12px; }
+  .nav__brand { font-size: 15px; }
+  .nav__links {
+    gap: 14px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  /* Project-in-focus: stack the detail image pair instead of squeezing
+     them into two columns. */
+  .project__pair {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
