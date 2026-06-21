@@ -750,6 +750,15 @@ a { color: inherit; }
   }
 }
 
+/* Work grid: below ~two 300px columns, `auto-fit` collapses to a single
+   track, but the `span 2` wide cards force an extra implicit column —
+   leaving the narrow cards misaligned and the wide cards overflowing.
+   Collapse to one full-width column and neutralise the span. */
+@media (max-width: 620px) {
+  .work-grid { grid-template-columns: 1fr; }
+  .work-grid .card--wide { grid-column: auto; }
+}
+
 /* Phones */
 @media (max-width: 600px) {
   /* The hero placeholder caption is absolutely positioned and collides
