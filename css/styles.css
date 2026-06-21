@@ -287,16 +287,6 @@ a { color: inherit; }
     rgba(16, 16, 15, 0.12) 38%,
     rgba(16, 16, 15, 0.82) 100%);
 }
-.hero__tag {
-  position: absolute;
-  bottom: clamp(30px, 5vh, 60px);
-  right: var(--hd-pad-x);
-  z-index: 1;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--hd-text-faint);
-}
 .hero__meta {
   position: relative;
   z-index: 2;
@@ -321,7 +311,7 @@ a { color: inherit; }
   font-weight: 800;
   line-height: 0.84;
   letter-spacing: -0.035em;
-  font-size: clamp(3.4rem, 14vw, 12.5rem);
+  font-size: clamp(2.38rem, 9.8vw, 8.75rem); /* 70% of original 3.4rem / 14vw / 12.5rem */
   text-transform: uppercase;
 }
 .hero__title > span {
@@ -848,10 +838,6 @@ a { color: inherit; }
 
 /* Phones */
 @media (max-width: 600px) {
-  /* The hero placeholder caption is absolutely positioned and collides
-     with the "Selected Work" CTA on narrow screens — drop it here. */
-  .hero__tag { display: none; }
-
   /* Project-in-focus: stack the detail image pair instead of squeezing
      them into two columns. */
   .project__pair {
