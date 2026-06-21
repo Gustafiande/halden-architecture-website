@@ -128,6 +128,95 @@ a { color: inherit; }
 }
 .nav__links a:hover::after { width: 100%; }
 
+/* Hamburger toggle — hidden on desktop, revealed at the mobile breakpoint.
+   Lives inside the blend-mode nav so the bars invert over any background. */
+.nav__toggle {
+  display: none;
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 8px;
+  margin: -8px;
+  cursor: pointer;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav__toggle-bars {
+  display: block;
+  position: relative;
+  width: 28px;
+  height: 14px;
+}
+.nav__bar {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.4s var(--hd-ease-out), opacity 0.25s var(--hd-ease-out);
+}
+.nav__bar:nth-child(1) { top: 0; }
+.nav__bar:nth-child(2) { top: 6px; }
+.nav__bar:nth-child(3) { top: 12px; }
+.is-nav-open .nav__bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.is-nav-open .nav__bar:nth-child(2) { opacity: 0; }
+.is-nav-open .nav__bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Full-screen mobile menu overlay — sits below the nav bar (so the brand
+   and toggle stay visible) and is shown only within the mobile breakpoint. */
+.nav-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--hd-ink-900);
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(96px, 16vh, 150px) var(--hd-pad-x) clamp(34px, 6vh, 56px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.45s var(--hd-ease-out),
+              transform 0.45s var(--hd-ease-out),
+              visibility 0.45s;
+}
+.is-nav-open .nav-menu { opacity: 1; visibility: visible; transform: none; }
+
+.nav-menu__links { display: flex; flex-direction: column; gap: clamp(6px, 1.6vh, 16px); }
+.nav-menu__links a {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  text-decoration: none;
+  color: var(--hd-text-strong);
+  font-family: var(--hd-font-display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 12vw, 4.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  transition: color var(--hd-dur-ui) var(--hd-ease-out);
+}
+.nav-menu__links a span {
+  font-family: var(--hd-font-body);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: var(--hd-track-label);
+  color: var(--hd-accent);
+}
+.nav-menu__links a:hover,
+.nav-menu__links a:focus-visible { color: var(--hd-accent); }
+
+.nav-menu__foot {
+  margin-top: clamp(40px, 8vh, 90px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--hd-text-muted);
+}
+.nav-menu__foot a { text-decoration: none; color: var(--hd-text-soft); }
+
 /* =============================================================
    GENERIC SECTION HELPERS
    ============================================================= */
@@ -741,13 +830,11 @@ a { color: inherit; }
    RESPONSIVE — tablet & mobile adjustments
    ============================================================= */
 
-/* Tablet and below: tighten the nav so the links never clip. */
-@media (max-width: 860px) {
-  .nav__links {
-    gap: clamp(12px, 3.4vw, 24px);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-  }
+/* Mobile & small tablet: swap the inline nav links for the hamburger menu. */
+@media (max-width: 760px) {
+  .nav__links { display: none; }
+  .nav__toggle { display: inline-flex; }
+  .nav-menu { display: flex; }
 }
 
 /* Work grid: below ~two 300px columns, `auto-fit` collapses to a single
@@ -764,15 +851,6 @@ a { color: inherit; }
   /* The hero placeholder caption is absolutely positioned and collides
      with the "Selected Work" CTA on narrow screens — drop it here. */
   .hero__tag { display: none; }
-
-  /* Nav: allow the wordmark + links to share the row without overflow. */
-  .nav { gap: 12px; }
-  .nav__brand { font-size: 15px; }
-  .nav__links {
-    gap: 14px;
-    font-size: 10px;
-    letter-spacing: 0.06em;
-  }
 
   /* Project-in-focus: stack the detail image pair instead of squeezing
      them into two columns. */

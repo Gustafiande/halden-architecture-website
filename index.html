@@ -24,7 +24,28 @@
       <a href="#halden-services">Practice</a>
       <a href="#halden-contact">Contact</a>
     </div>
+    <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+      <span class="nav__toggle-bars" aria-hidden="true">
+        <span class="nav__bar"></span>
+        <span class="nav__bar"></span>
+        <span class="nav__bar"></span>
+      </span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="nav-menu" id="nav-menu" aria-hidden="true">
+    <nav class="nav-menu__links" aria-label="Primary">
+      <a href="#halden-work"><span>01</span>Work</a>
+      <a href="#halden-studio"><span>02</span>Studio</a>
+      <a href="#halden-services"><span>03</span>Practice</a>
+      <a href="#halden-contact"><span>04</span>Contact</a>
+    </nav>
+    <div class="nav-menu__foot">
+      <a href="mailto:studio@halden.archi">studio@halden.archi</a>
+      <span>Copenhagen / Oslo</span>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section id="halden-hero" class="hero" data-parallax-trigger>

@@ -5,6 +5,54 @@
 (function () {
   'use strict';
 
+  /* -----------------------------------------------------------
+     Mobile navigation (hamburger menu). Runs unconditionally —
+     independent of GSAP and reduced-motion preferences.
+     ----------------------------------------------------------- */
+  function initNav() {
+    var toggle = document.querySelector('.nav__toggle');
+    var menu = document.getElementById('nav-menu');
+    if (!toggle || !menu) return;
+
+    var root = document.documentElement;
+
+    function open() {
+      root.classList.add('is-nav-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      root.classList.remove('is-nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', function () {
+      if (root.classList.contains('is-nav-open')) close();
+      else open();
+    });
+
+    // Any in-menu link (and the brand) closes the overlay before jumping.
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', close);
+    });
+    var brand = document.querySelector('.nav__brand');
+    if (brand) brand.addEventListener('click', close);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+
+    // Close if the viewport grows past the mobile breakpoint.
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 760) close();
+    });
+  }
+
   function init() {
     var g = window.gsap;
     var ST = window.ScrollTrigger;
@@ -96,9 +144,14 @@
     setTimeout(refresh, 700);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
+  function boot() {
+    initNav();
     init();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 })();
